@@ -21,6 +21,8 @@
       --fw-display:700;
       --timing-smooth:cubic-bezier(0.23,1,0.32,1);
       --space-base:0.5rem;
+      --shadow-soft:0 4px 14px rgba(0,0,0,0.15);
+      --radius:8px;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
@@ -37,44 +39,53 @@
     nav a{padding:0.5rem 0;position:relative}
     nav a::after{content:'';position:absolute;left:50%;bottom:0;width:0;height:2px;background:#fff;transition:var(--timing-smooth)}
     nav a:hover::after{left:0;width:100%}
-    .cta{padding:0.5rem 1rem;border-radius:0.5rem;background:var(--gradient-plasma);border:none;cursor:pointer}
+    .cta{padding:0.5rem 1rem;border-radius:0.5rem;background:var(--gradient-plasma);border:none;cursor:pointer;transition:transform 0.2s ease}
+    .cta:hover{transform:scale(1.05)}
     .menu-toggle{display:none}
 
     section{scroll-snap-align:start;min-height:100vh;padding:calc(var(--space-base)*8) 0;position:relative}
     .section-divider::after{content:'';position:absolute;inset:auto 0 -1px 0;height:8vw;background:var(--clr-bg-primary);clip-path:polygon(0 0,100% 100%,0 100%)}
 
-    .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
-    .hero-title{font-size:3.5rem;background:var(--gradient-holo);-webkit-background-clip:text;color:transparent;margin-bottom:1rem}
-    .hero p{font-size:1.25rem;margin-bottom:2rem}
+    .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;background:radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)}
+    .overline{font-size:0.875rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem;opacity:0.7}
+    .hero-title{font-size:clamp(2.5rem, 8vw, 4rem);background:var(--gradient-holo);-webkit-background-clip:text;color:transparent;margin-bottom:1rem;line-height:1.1}
+    .hero p{font-size:1.25rem;margin-bottom:2rem;max-width:600px}
     .type-line{display:inline-block;overflow:hidden;border-right:.1em solid #fff;white-space:nowrap;width:0;animation:typing 2s steps(20,end) forwards,blink 1s step-end infinite;animation-delay:var(--delay,0s)}
-    .actions{display:flex;gap:calc(var(--space-base)*2)}
-    .btn{padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:700;cursor:pointer;transition:background .2s ease,transform .2s ease}
-    .btn-primary{background:var(--gradient-holo);}
-    .btn-secondary{border:1px solid #fff;background:transparent}
+    .actions{display:flex;gap:calc(var(--space-base)*2);flex-wrap:wrap;justify-content:center}
+    .btn{padding:0.75rem 1.5rem;border-radius:var(--radius);font-weight:700;cursor:pointer;transition:all .2s ease;border:none;font-size:1rem}
+    .btn-primary{background:var(--gradient-holo);color:white}
+    .btn-secondary{border:1px solid #fff;background:transparent;color:white}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(139, 92, 246, 0.3)}
     .magnetic-btn{--x:50%;--y:50%;background:radial-gradient(circle at var(--x) var(--y),rgba(255,255,255,.25) 0%,rgba(255,255,255,0) 40%),var(--gradient-holo)}
 
     .solutions .card-grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));perspective:800px}
-    .card{background:var(--clr-surface-glass);padding:2rem;border-radius:1rem;box-shadow:0 4px 14px rgba(0,0,0,0.15);transition:transform .3s var(--timing-smooth),box-shadow .3s var(--timing-smooth);backdrop-filter:blur(20px)}
-    .card:hover{transform:rotateX(5deg) rotateY(10deg);box-shadow:0 15px 35px rgba(0,0,0,0.3)}
+    .card{background:var(--clr-surface-glass);padding:2rem;border-radius:1rem;box-shadow:var(--shadow-soft);transition:transform .3s var(--timing-smooth),box-shadow .3s var(--timing-smooth);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1)}
+    .card:hover{transform:rotateX(5deg) rotateY(10deg) translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,0.3)}
     .card h3{margin-bottom:0.5rem;font-size:1.25rem;background:var(--gradient-plasma);-webkit-background-clip:text;color:transparent}
 
     .pricing{text-align:center}
+    .pricing-toggle{margin-bottom:2rem}
+    .pricing-toggle label{display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer}
     .pricing-grid{display:flex;flex-wrap:wrap;gap:2rem;justify-content:center}
-    .pricing-card{background:var(--clr-surface-glass);padding:2rem;border-radius:1rem;box-shadow:0 4px 14px rgba(0,0,0,0.15);width:280px;transition:transform .3s var(--timing-smooth),box-shadow .3s var(--timing-smooth);backdrop-filter:blur(20px)}
-    .pricing-card.popular{border:2px solid;border-image:var(--gradient-holo) 1}
+    .pricing-card{background:var(--clr-surface-glass);padding:2rem;border-radius:1rem;box-shadow:var(--shadow-soft);width:280px;transition:transform .3s var(--timing-smooth),box-shadow .3s var(--timing-smooth);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1)}
+    .pricing-card.popular{border:2px solid;border-image:var(--gradient-holo) 1;position:relative}
+    .pricing-card.popular::before{content:'Most Popular';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gradient-holo);padding:0.25rem 0.75rem;font-size:0.75rem;border-radius:1rem}
     .pricing-card:hover{transform:translateY(-10px);box-shadow:0 15px 35px rgba(0,0,0,0.3)}
     .price{font-family:'JetBrains Mono',monospace;font-size:2rem;margin:1rem 0;display:inline-block;animation-duration:0.6s;animation-fill-mode:forwards}
 
-    .testimonials{background:#000}
-    .testimonial-grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-    .testimonial{background:rgba(17,17,17,0.8);padding:2rem;border-radius:1rem;backdrop-filter:blur(5px)}
+    .testimonials{background:linear-gradient(135deg, #000 0%, #0a0a0b 100%)}
+    .testimonial-grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .testimonial{background:rgba(17,17,17,0.8);padding:2rem;border-radius:1rem;backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,0.05);transition:transform 0.3s ease}
+    .testimonial:hover{transform:translateY(-5px)}
+    .testimonial p:first-child{font-style:italic;margin-bottom:1rem}
+    .testimonial p:last-child{opacity:0.7;font-size:0.9rem}
 
     footer{text-align:center;font-size:0.875rem;border-top:1px solid #1a1a1a;background:var(--clr-bg-primary);padding:2rem 0}
 
     @media(max-width:768px){
       nav ul{flex-direction:column;position:fixed;top:60px;right:0;width:200px;height:calc(100vh - 60px);padding:1rem;background:var(--clr-bg-primary);transform:translateX(100%);transition:transform .3s var(--timing-smooth)}
       #nav-menu.open{transform:translateX(0);display:flex}
-      .menu-toggle{display:block;cursor:pointer}
+      .menu-toggle{display:block;cursor:pointer;background:none;border:none;color:white;font-size:1.25rem}
       .hero-title{font-size:2.5rem}
     }
 
@@ -121,15 +132,15 @@
       <div class="card-grid">
         <div class="card reveal-animation">
           <h3>Lightning Creation</h3>
-          <p>Produce content at light speed with smart automation.</p>
+          <p>Produce content at light speed with smart automation that understands your creative vision.</p>
         </div>
         <div class="card reveal-animation">
           <h3>Infinite Canvas</h3>
-          <p>Break creative boundaries with endless possibilities.</p>
+          <p>Break creative boundaries with endless possibilities and unlimited creative potential.</p>
         </div>
         <div class="card reveal-animation">
           <h3>Smart Amplification</h3>
-          <p>Enhance every idea with cutting-edge AI.</p>
+          <p>Enhance every idea with cutting-edge AI that learns and adapts to your workflow.</p>
         </div>
       </div>
     </div>
@@ -137,24 +148,28 @@
 
   <section class="pricing section-divider" id="pricing">
     <div class="wrapper">
+      <h2 style="text-align:center;margin-bottom:2rem;font-size:2.5rem;background:var(--gradient-plasma);-webkit-background-clip:text;color:transparent">Choose Your Plan</h2>
       <div class="pricing-toggle">
-        <label><input type="checkbox" id="priceToggle"> Annual Billing</label>
+        <label><input type="checkbox" id="priceToggle"> Annual Billing (Save 20%)</label>
       </div>
       <div class="pricing-grid">
         <div class="pricing-card reveal-animation">
           <h3>Starter</h3>
           <div class="price" data-monthly="9" data-annual="90">$9</div>
-          <button class="btn btn-primary magnetic-btn">Choose</button>
+          <p style="margin-bottom:1.5rem;">Perfect for individuals getting started</p>
+          <button class="btn btn-primary magnetic-btn">Choose Plan</button>
         </div>
         <div class="pricing-card popular reveal-animation">
           <h3>Pro</h3>
           <div class="price" data-monthly="19" data-annual="190">$19</div>
-          <button class="btn btn-primary magnetic-btn">Choose</button>
+          <p style="margin-bottom:1.5rem;">Ideal for growing teams and businesses</p>
+          <button class="btn btn-primary magnetic-btn">Choose Plan</button>
         </div>
         <div class="pricing-card reveal-animation">
           <h3>Enterprise</h3>
           <div class="price" data-monthly="49" data-annual="490">$49</div>
-          <button class="btn btn-primary magnetic-btn">Choose</button>
+          <p style="margin-bottom:1.5rem;">Advanced features for large organizations</p>
+          <button class="btn btn-primary magnetic-btn">Choose Plan</button>
         </div>
       </div>
     </div>
@@ -162,18 +177,19 @@
 
   <section class="testimonials" id="testimonials">
     <div class="wrapper">
+      <h2 style="text-align:center;margin-bottom:3rem;font-size:2.5rem;background:var(--gradient-holo);-webkit-background-clip:text;color:transparent">What Our Users Say</h2>
       <div class="testimonial-grid">
         <div class="testimonial reveal-animation">
-          <p>"SkinZAI transformed our workflow and unleashed our creativity."</p>
-          <p>- Jamie, Designer</p>
+          <p>"SkinZAI transformed our workflow and unleashed our creativity like never before."</p>
+          <p>- Jamie Chen, Creative Director</p>
         </div>
         <div class="testimonial reveal-animation">
-          <p>"A must-have tool for every modern creator."</p>
-          <p>- Alex, Developer</p>
+          <p>"A must-have tool for every modern creator. The AI capabilities are mind-blowing."</p>
+          <p>- Alex Rodriguez, Full-Stack Developer</p>
         </div>
         <div class="testimonial reveal-animation">
-          <p>"Simply amazing results in record time."</p>
-          <p>- Morgan, Marketer</p>
+          <p>"Simply amazing results in record time. Our productivity increased by 300%."</p>
+          <p>- Morgan Taylor, Marketing Manager</p>
         </div>
       </div>
     </div>
@@ -181,7 +197,9 @@
 
 </main>
   <footer>
-    &copy; 2024 SkinZAI. All rights reserved.
+    <div class="wrapper">
+      <p>&copy; 2024 SkinZAI. All rights reserved. Imagination. Engineered.</p>
+    </div>
   </footer>
 
 <script>
@@ -255,6 +273,18 @@
       setTimeout(type,delay);
     });
   }
+
+  function initSmoothScrolling(){
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) {
+          target.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+      });
+    });
+  }
   document.addEventListener('DOMContentLoaded',()=>{
     initNavigation();
     initPricingToggle();
@@ -262,6 +292,7 @@
     initScrollProgress();
     initMagneticButtons();
     initTypewriter();
+    initSmoothScrolling();
   });
 })();
 </script>
