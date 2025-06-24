@@ -28,6 +28,7 @@
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
     header{position:fixed;top:0;width:100%;backdrop-filter:blur(10px);background:rgba(10,10,11,.7);border-bottom:1px solid #1a1a1a;z-index:100}
+    .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--gradient-holo);z-index:200;transition:width .2s ease}
     .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
     .wrapper{width:clamp(18rem,85%,96rem);margin:0 auto;padding:0 calc(var(--space-base)*2)}
     .logo{font-weight:var(--fw-display);font-size:1.25rem}
@@ -87,6 +88,7 @@
   </style>
 </head>
 <body>
+  <div id="scroll-progress" class="progress" aria-hidden="true"></div>
   <header>
     <div class="wrapper nav">
       <div class="logo">Skin<span>ZAI</span></div>
@@ -215,6 +217,15 @@
     },{threshold:0.1});
     els.forEach(el=>obs.observe(el));
   }
+  function initScrollProgress(){
+    const bar=document.getElementById('scroll-progress');
+    window.addEventListener('scroll',()=>{
+      const scrollTop=window.scrollY;
+      const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+      const progress=Math.min(scrollTop/docHeight*100,100);
+      bar.style.width=progress+'%';
+    });
+  }
   function initMagneticButtons(){
     document.querySelectorAll('.magnetic-btn').forEach(btn=>{
       btn.addEventListener('mousemove',e=>{
@@ -248,6 +259,7 @@
     initNavigation();
     initPricingToggle();
     initScrollReveal();
+    initScrollProgress();
     initMagneticButtons();
     initTypewriter();
   });
