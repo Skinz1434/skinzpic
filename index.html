@@ -6,6 +6,7 @@
   <meta property="og:title" content="SkinZAI - Imagination. Engineered.">
   <meta property="og:description" content="Where bold ideas become breakthrough reality">
   <meta property="og:image" content="og-image.png">
+  <meta property="og:image:alt" content="SkinZAI holographic brain over cosmic void">
   <meta name="twitter:card" content="summary_large_image">
   <title>SkinZAI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,8 +43,9 @@
     .section-divider::after{content:'';position:absolute;inset:auto 0 -1px 0;height:8vw;background:var(--clr-bg-primary);clip-path:polygon(0 0,100% 100%,0 100%)}
 
     .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
-    .hero h1{font-size:3.5rem;background:var(--gradient-holo);-webkit-background-clip:text;color:transparent;margin-bottom:1rem}
+    .hero-title{font-size:3.5rem;background:var(--gradient-holo);-webkit-background-clip:text;color:transparent;margin-bottom:1rem}
     .hero p{font-size:1.25rem;margin-bottom:2rem}
+    .type-line{display:inline-block;overflow:hidden;border-right:.1em solid #fff;white-space:nowrap;width:0;animation:typing 2s steps(20,end) forwards,blink 1s step-end infinite;animation-delay:var(--delay,0s)}
     .actions{display:flex;gap:calc(var(--space-base)*2)}
     .btn{padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:700;cursor:pointer;transition:background .2s ease,transform .2s ease}
     .btn-primary{background:var(--gradient-holo);}
@@ -69,10 +71,10 @@
     footer{text-align:center;font-size:0.875rem;border-top:1px solid #1a1a1a;background:var(--clr-bg-primary);padding:2rem 0}
 
     @media(max-width:768px){
-      nav ul{display:none;flex-direction:column;position:absolute;top:60px;right:0;background:var(--clr-bg-primary);width:200px;padding:1rem}
-      #nav-menu.open{display:flex;flex-direction:column}
+      nav ul{flex-direction:column;position:fixed;top:60px;right:0;width:200px;height:calc(100vh - 60px);padding:1rem;background:var(--clr-bg-primary);transform:translateX(100%);transition:transform .3s var(--timing-smooth)}
+      #nav-menu.open{transform:translateX(0);display:flex}
       .menu-toggle{display:block;cursor:pointer}
-      .hero h1{font-size:2.5rem}
+      .hero-title{font-size:2.5rem}
     }
 
     .reveal-animation{opacity:0;transform:translateY(20px)}
@@ -80,6 +82,8 @@
 
     @keyframes pulse-hue{from{filter:hue-rotate(0)}to{filter:hue-rotate(360deg)}}
     @keyframes flipIn{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+    @keyframes typing{from{width:0}to{width:100%}}
+    @keyframes blink{50%{border-color:transparent}}
   </style>
 </head>
 <body>
@@ -101,7 +105,7 @@
   <section class="hero section-divider" id="hero">
     <div class="wrapper">
       <p class="overline">Next-Gen AI Studio</p>
-      <h1>Imagination. Engineered.</h1>
+      <h1 class="hero-title"><span class="type-line" data-text="Imagine." style="--delay:0s"></span><br><span class="type-line" data-text="Iterate." style="--delay:2.2s"></span><br><span class="type-line" data-text="Ignite." style="--delay:4.4s"></span></h1>
       <p>Where bold ideas become breakthrough reality</p>
       <div class="actions">
         <button class="btn btn-primary magnetic-btn">Launch Demo</button>
@@ -224,11 +228,28 @@
       btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
     });
   }
+  function initTypewriter(){
+    document.querySelectorAll('.type-line').forEach(line=>{
+      const text=line.dataset.text;
+      line.textContent='';
+      const delay=parseFloat(getComputedStyle(line).getPropertyValue('--delay'))*1000;
+      let i=0;
+      function type(){
+        if(i<=text.length){
+          line.textContent=text.slice(0,i);
+          i++;
+          setTimeout(type,80);
+        }
+      }
+      setTimeout(type,delay);
+    });
+  }
   document.addEventListener('DOMContentLoaded',()=>{
     initNavigation();
     initPricingToggle();
     initScrollReveal();
     initMagneticButtons();
+    initTypewriter();
   });
 })();
 </script>
