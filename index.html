@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="SkinZAI - Imagination. Engineered.">
+  <meta property="og:description" content="Where bold ideas become breakthrough reality">
+  <meta property="og:image" content="og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>SkinZAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --clr-bg-primary:#0a0a0b;
+      --clr-surface-glass:rgba(255,255,255,0.06);
+      --gradient-plasma:linear-gradient(135deg,#8B5CF6 0%,#06B6D4 100%);
+      --gradient-holo:linear-gradient(135deg,#8B5CF6 0%,#EC4899 50%,#F59E0B 100%);
+      --fw-display:700;
+      --timing-smooth:cubic-bezier(0.23,1,0.32,1);
+      --space-base:0.5rem;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--clr-bg-primary);color:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    header{position:fixed;top:0;width:100%;backdrop-filter:blur(10px);background:rgba(10,10,11,.7);border-bottom:1px solid #1a1a1a;z-index:100}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+    .wrapper{width:clamp(18rem,85%,96rem);margin:0 auto;padding:0 calc(var(--space-base)*2)}
+    .logo{font-weight:var(--fw-display);font-size:1.25rem}
+    .logo span{background:var(--gradient-holo);-webkit-background-clip:text;color:transparent;animation:pulse-hue 8s infinite linear}
+    nav ul{display:flex;gap:calc(var(--space-base)*2);list-style:none}
+    nav a{padding:0.5rem 0;position:relative}
+    nav a::after{content:'';position:absolute;left:50%;bottom:0;width:0;height:2px;background:#fff;transition:var(--timing-smooth)}
+    nav a:hover::after{left:0;width:100%}
+    .cta{padding:0.5rem 1rem;border-radius:0.5rem;background:var(--gradient-plasma);border:none;cursor:pointer}
+    .menu-toggle{display:none}
+
+    section{scroll-snap-align:start;min-height:100vh;padding:calc(var(--space-base)*8) 0;position:relative}
+    .section-divider::after{content:'';position:absolute;inset:auto 0 -1px 0;height:8vw;background:var(--clr-bg-primary);clip-path:polygon(0 0,100% 100%,0 100%)}
+
+    .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
+    .hero h1{font-size:3.5rem;background:var(--gradient-holo);-webkit-background-clip:text;color:transparent;margin-bottom:1rem}
+    .hero p{font-size:1.25rem;margin-bottom:2rem}
+    .actions{display:flex;gap:calc(var(--space-base)*2)}
+    .btn{padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:700;cursor:pointer;transition:background .2s ease,transform .2s ease}
+    .btn-primary{background:var(--gradient-holo);}
+    .btn-secondary{border:1px solid #fff;background:transparent}
+    .magnetic-btn{--x:50%;--y:50%;background:radial-gradient(circle at var(--x) var(--y),rgba(255,255,255,.25) 0%,rgba(255,255,255,0) 40%),var(--gradient-holo)}
+
+    .solutions .card-grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));perspective:800px}
+    .card{background:var(--clr-surface-glass);padding:2rem;border-radius:1rem;box-shadow:0 4px 14px rgba(0,0,0,0.15);transition:transform .3s var(--timing-smooth),box-shadow .3s var(--timing-smooth);backdrop-filter:blur(20px)}
+    .card:hover{transform:rotateX(5deg) rotateY(10deg);box-shadow:0 15px 35px rgba(0,0,0,0.3)}
+    .card h3{margin-bottom:0.5rem;font-size:1.25rem;background:var(--gradient-plasma);-webkit-background-clip:text;color:transparent}
+
+    .pricing{text-align:center}
+    .pricing-grid{display:flex;flex-wrap:wrap;gap:2rem;justify-content:center}
+    .pricing-card{background:var(--clr-surface-glass);padding:2rem;border-radius:1rem;box-shadow:0 4px 14px rgba(0,0,0,0.15);width:280px;transition:transform .3s var(--timing-smooth),box-shadow .3s var(--timing-smooth);backdrop-filter:blur(20px)}
+    .pricing-card.popular{border:2px solid;border-image:var(--gradient-holo) 1}
+    .pricing-card:hover{transform:translateY(-10px);box-shadow:0 15px 35px rgba(0,0,0,0.3)}
+    .price{font-family:'JetBrains Mono',monospace;font-size:2rem;margin:1rem 0;display:inline-block;animation-duration:0.6s;animation-fill-mode:forwards}
+
+    .testimonials{background:#000}
+    .testimonial-grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+    .testimonial{background:rgba(17,17,17,0.8);padding:2rem;border-radius:1rem;backdrop-filter:blur(5px)}
+
+    footer{text-align:center;font-size:0.875rem;border-top:1px solid #1a1a1a;background:var(--clr-bg-primary);padding:2rem 0}
+
+    @media(max-width:768px){
+      nav ul{display:none;flex-direction:column;position:absolute;top:60px;right:0;background:var(--clr-bg-primary);width:200px;padding:1rem}
+      #nav-menu.open{display:flex;flex-direction:column}
+      .menu-toggle{display:block;cursor:pointer}
+      .hero h1{font-size:2.5rem}
+    }
+
+    .reveal-animation{opacity:0;transform:translateY(20px)}
+    .reveal-animation.revealed{opacity:1;transform:none;transition:opacity .6s var(--timing-smooth),transform .6s var(--timing-smooth)}
+
+    @keyframes pulse-hue{from{filter:hue-rotate(0)}to{filter:hue-rotate(360deg)}}
+    @keyframes flipIn{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrapper nav">
+      <div class="logo">Skin<span>ZAI</span></div>
+      <nav role="navigation" aria-label="Main">
+        <ul id="nav-menu">
+          <li><a href="#solutions">Solutions</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+        </ul>
+      </nav>
+      <button class="cta menu-toggle" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+<main>
+
+  <section class="hero section-divider" id="hero">
+    <div class="wrapper">
+      <p class="overline">Next-Gen AI Studio</p>
+      <h1>Imagination. Engineered.</h1>
+      <p>Where bold ideas become breakthrough reality</p>
+      <div class="actions">
+        <button class="btn btn-primary magnetic-btn">Launch Demo</button>
+        <button class="btn btn-secondary">See Pricing</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="solutions section-divider" id="solutions">
+    <div class="wrapper">
+      <div class="card-grid">
+        <div class="card reveal-animation">
+          <h3>Lightning Creation</h3>
+          <p>Produce content at light speed with smart automation.</p>
+        </div>
+        <div class="card reveal-animation">
+          <h3>Infinite Canvas</h3>
+          <p>Break creative boundaries with endless possibilities.</p>
+        </div>
+        <div class="card reveal-animation">
+          <h3>Smart Amplification</h3>
+          <p>Enhance every idea with cutting-edge AI.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing section-divider" id="pricing">
+    <div class="wrapper">
+      <div class="pricing-toggle">
+        <label><input type="checkbox" id="priceToggle"> Annual Billing</label>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card reveal-animation">
+          <h3>Starter</h3>
+          <div class="price" data-monthly="9" data-annual="90">$9</div>
+          <button class="btn btn-primary magnetic-btn">Choose</button>
+        </div>
+        <div class="pricing-card popular reveal-animation">
+          <h3>Pro</h3>
+          <div class="price" data-monthly="19" data-annual="190">$19</div>
+          <button class="btn btn-primary magnetic-btn">Choose</button>
+        </div>
+        <div class="pricing-card reveal-animation">
+          <h3>Enterprise</h3>
+          <div class="price" data-monthly="49" data-annual="490">$49</div>
+          <button class="btn btn-primary magnetic-btn">Choose</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials" id="testimonials">
+    <div class="wrapper">
+      <div class="testimonial-grid">
+        <div class="testimonial reveal-animation">
+          <p>"SkinZAI transformed our workflow and unleashed our creativity."</p>
+          <p>- Jamie, Designer</p>
+        </div>
+        <div class="testimonial reveal-animation">
+          <p>"A must-have tool for every modern creator."</p>
+          <p>- Alex, Developer</p>
+        </div>
+        <div class="testimonial reveal-animation">
+          <p>"Simply amazing results in record time."</p>
+          <p>- Morgan, Marketer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+  <footer>
+    &copy; 2024 SkinZAI. All rights reserved.
+  </footer>
+
+<script>
+(function(){
+  function initNavigation(){
+    const toggle=document.querySelector(".menu-toggle");
+    const menu=document.getElementById("nav-menu");
+    toggle.addEventListener("click",()=>{
+      const open=menu.classList.toggle("open");
+      toggle.setAttribute("aria-expanded",open);
+    });
+  }
+  function initPricingToggle(){
+    const toggle=document.getElementById('priceToggle');
+    const prices=document.querySelectorAll('.price');
+    toggle.addEventListener('change',()=>{
+      prices.forEach(p=>{
+        p.textContent='$'+(toggle.checked?p.dataset.annual:p.dataset.monthly);
+        p.style.animation='flipIn .6s';
+      });
+    });
+  }
+  function initScrollReveal(){
+    const els=document.querySelectorAll('.reveal-animation');
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach((e,i)=>{
+        if(e.isIntersecting){
+          e.target.classList.add('revealed');
+          e.target.style.transitionDelay=i*80+'ms';
+          obs.unobserve(e.target);
+        }
+      });
+    },{threshold:0.1});
+    els.forEach(el=>obs.observe(el));
+  }
+  function initMagneticButtons(){
+    document.querySelectorAll('.magnetic-btn').forEach(btn=>{
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        const x=e.clientX-r.left-r.width/2;
+        const y=e.clientY-r.top-r.height/2;
+        btn.style.setProperty('--x',e.clientX-r.left+'px');
+        btn.style.setProperty('--y',e.clientY-r.top+'px');
+        btn.style.transform=`translate(${x*0.1}px,${y*0.1}px) scale(1.05)`;
+      });
+      btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+    });
+  }
+  document.addEventListener('DOMContentLoaded',()=>{
+    initNavigation();
+    initPricingToggle();
+    initScrollReveal();
+    initMagneticButtons();
+  });
+})();
+</script>
+</body>
+</html>
